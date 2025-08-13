@@ -1,5 +1,6 @@
 package org.arthurandrade.samsungfakestoreapi.config;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.arthurandrade.samsungfakestoreapi.domain.noData.GenericResponse;
 import org.arthurandrade.samsungfakestoreapi.domain.noData.JsonMessage;
 import org.arthurandrade.samsungfakestoreapi.util.MessageContextHolder;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -42,7 +44,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<GenericResponse> handleIntegrity(DataIntegrityViolationException e) {
+	public ResponseEntity<GenericResponse> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
 		return buildResponse(HttpStatus.CONFLICT, "error.integrityViolation", e);
 	}
 
@@ -51,7 +53,11 @@ public class GlobalExceptionHandler {
 		return buildResponse(HttpStatus.METHOD_NOT_ALLOWED, "error.methodNotAllowed", e);
 	}
 
-	@ExceptionHandler(NoResourceFoundException.class)
+	@ExceptionHandler({
+			NoResourceFoundException.class,
+			EntityNotFoundException.class,
+			EmptyResultDataAccessException.class,
+	})
 	public ResponseEntity<GenericResponse> handleNoResourceFoundException(Exception e) {
 		return buildResponse(HttpStatus.NOT_FOUND, "error.resource.notFound", e);
 	}
