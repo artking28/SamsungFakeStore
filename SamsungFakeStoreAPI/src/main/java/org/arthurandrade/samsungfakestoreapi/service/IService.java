@@ -1,5 +1,6 @@
 package org.arthurandrade.samsungfakestoreapi.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.arthurandrade.samsungfakestoreapi.domain.exceptions.BusinessRuleException;
 import org.arthurandrade.samsungfakestoreapi.domain.interfaces.IAbstractDTO;
 import org.arthurandrade.samsungfakestoreapi.domain.interfaces.IAbstractEntity;
@@ -13,11 +14,13 @@ public interface IService<T extends IAbstractEntity<T, DTO>, DTO extends IAbstra
 
     JpaRepository<T, Long> getRepository();
 
-    DTO getById(Long id);
+    DTO getById(Long id) throws EntityNotFoundException;
 
-    void deleteById(Long id) throws BusinessRuleException;
+    void deleteById(Long id) throws EntityNotFoundException;
 
     DTO save(DTO dto) throws BusinessRuleException;
 
-    List<DTO> select(FilteredPageRequest<DTO> dto) throws BusinessRuleException, ObjectNotFoundException;
+    List<DTO> find(DTO dto) throws ObjectNotFoundException;
+
+    List<DTO> find(FilteredPageRequest<DTO> request) throws ObjectNotFoundException;
 }

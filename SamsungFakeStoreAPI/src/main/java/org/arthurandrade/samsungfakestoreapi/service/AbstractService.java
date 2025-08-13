@@ -16,8 +16,8 @@ import java.util.List;
 @SuppressWarnings("RedundantThrows")
 public abstract class AbstractService<T extends IAbstractEntity<T, DTO>, DTO extends IAbstractDTO<T>> implements IService<T, DTO> {
 
-	public DTO getById(Long id) {
-		return getRepository().findById(id).map(IAbstractEntity::toDTO).orElse(null);
+	public DTO getById(Long id) throws EntityNotFoundException {
+		return getRepository().findById(id).map(IAbstractEntity::toDTO).orElseThrow(EntityNotFoundException::new);
 	}
 
 	public List<DTO> find(DTO dto) throws ObjectNotFoundException {
@@ -51,7 +51,7 @@ public abstract class AbstractService<T extends IAbstractEntity<T, DTO>, DTO ext
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public DTO save(DTO dto) throws EntityNotFoundException {
+	public DTO save(DTO dto) throws BusinessRuleException {
 		T entity = dto.toEntity();
 		commonValidations(entity);
 		if(entity.getId() == null) {
