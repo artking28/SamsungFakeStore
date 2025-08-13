@@ -1,0 +1,16 @@
+spring:
+   datasource:
+      url: jdbc:postgresql://localhost:5432/samsungfakestore
+      username: postgres
+      password: postgres
+      driver-class-name: org.postgresql.Driver
+   jpa:
+      database-platform: org.arthurandrade.samsungfakestoreapi.config.MyPostgresDialect
+      hibernate:
+         ddl-auto: update
+      show-sql: true
+
+server:
+   port: 3000
+   error:
+      include-stacktrace: always
