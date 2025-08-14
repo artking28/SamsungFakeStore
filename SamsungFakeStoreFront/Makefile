@@ -14,7 +14,7 @@ container:
 	@if [ "$$(docker ps -aq -f name=$(CONTAINER_NAME))" ]; then \
 		docker start $(CONTAINER_NAME); \
 	else \
-		docker run -d --name $(CONTAINER_NAME) -p $(CONTAINER_PORT) -e WILDFLY_PASSWORD=$(CONTAINER_PASSWORD) bitnami/wildfly:latest; \
+		docker run -d --name $(CONTAINER_NAME) -p $(CONTAINER_PORT) -e WILDFLY_PASSWORD=$(CONTAINER_PASSWORD) bitnami/wildfly:27.0.1; \
 	fi
 
 build:
