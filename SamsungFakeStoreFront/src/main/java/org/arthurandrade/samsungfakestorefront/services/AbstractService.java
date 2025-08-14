@@ -7,6 +7,8 @@ import jakarta.ws.rs.core.Response;
 
 public abstract class AbstractService {
 
+    protected static final String BASE_URL = "http://localhost:3000";
+
     protected Client client = ClientBuilder.newClient();
 
     // Base URL do serviço

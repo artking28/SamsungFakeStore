@@ -10,16 +10,18 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>org.arthurAndrade</groupId>
-    <artifactId>samsungFakeStoreAPI</artifactId>
+    <groupId>org.arthurandrade</groupId>
+    <artifactId>samsungfakestoreapi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>samsungFakeStoreAPI</name>
-    <description>samsungFakeStoreAPI</description>
+    <name>samsungfakestoreapi</name>
+    <description>samsungfakestoreapi</description>
 
     <properties>
-        <java.version>22</java.version>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <junit.version>5.13.2</junit.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -78,20 +80,9 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
+                            <version>1.18.38</version>
                         </path>
                     </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

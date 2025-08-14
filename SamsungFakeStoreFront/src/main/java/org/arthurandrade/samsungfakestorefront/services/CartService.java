@@ -13,6 +13,6 @@ public class CartService extends EntityService<CartDTO> {
 
     @Override
     protected String getServiceUrl() {
-        return "";
+        return "carts";
     }
 }
