@@ -1,18 +1,18 @@
 package org.arthurandrade.samsungfakestorefront.services;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.arthurandrade.samsungfakestoreapi.domain.dto.UserDTO;
+import org.arthurandrade.samsungfakestoreapi.domain.dto.ProductDTO;
 
 @ApplicationScoped
-public class UserService extends EntityService<UserDTO> {
+public class ProductService extends EntityService<ProductDTO> {
 
     @Override
-    protected void prepareSave(UserDTO obj) {
+    protected void prepareSave(ProductDTO obj) {
 
     }
 
     @Override
     protected String getServiceUrl() {
-        return "/users";
+        return "/products";
     }
 }

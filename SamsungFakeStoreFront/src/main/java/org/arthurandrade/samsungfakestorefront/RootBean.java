@@ -28,8 +28,11 @@ public class RootBean implements Serializable {
 
     // Filter fields
     private String name;
+
     private Date dateFrom;
+
     private Date dateTo;
+
     private String orderNumber;
 
     // List of items

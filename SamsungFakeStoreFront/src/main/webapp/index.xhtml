@@ -5,31 +5,39 @@
 <h:head>
     <title>Samsung FakeStore UI</title>
     <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="destroyDefault.css"/>
 </h:head>
 
 <h:body>
 
-    <p:panel header="Seach criteria">
+    <section id="header">
+        <h1>Search criteria</h1>
+        <hr/>
         <h:form id="filterForm">
-            <p:panelGrid columns="2" columnClasses="label,value">
-                <h:outputLabel for="name" value="Name:"/>
-                <p:inputText id="name" value="#{rootBean.name}"/>
+            <section id="filter">
+                <div class="filter">
+                    <label for="client">Client</label>
+                    <p:inputText id="name" value="#{rootBean.name}"/>
+                </div>
 
-                <h:outputLabel for="dateFrom" value="Date From:"/>
-                <p:calendar id="dateFrom" value="#{rootBean.dateFrom}" pattern="yyyy-MM-dd"/>
+                <div class="filter">
+                    <label>Order date</label>
+                    <p:calendar id="dateFrom" value="#{rootBean.dateFrom}" pattern="yyyy-MM-dd"/>
+                    <p:calendar id="dateTo" value="#{rootBean.dateTo}" pattern="yyyy-MM-dd"/>
+                </div>
 
-                <h:outputLabel for="dateTo" value="Date To:"/>
-                <p:calendar id="dateTo" value="#{rootBean.dateTo}" pattern="yyyy-MM-dd"/>
+                <div class="filter">
+                    <label for="orderNumber">Order Number</label>
+                    <p:inputText id="orderNumber" value="#{rootBean.orderNumber}"/>
+                </div>
 
-                <h:outputLabel for="orderNumber" value="Order Number:"/>
-                <p:inputText id="orderNumber" value="#{rootBean.orderNumber}"/>
-            </p:panelGrid>
-
-            <p:commandButton value="Search" action="#{rootBean.applyFilter}" update=":filterForm :listPanel"
-                             process="@form"/>
-            <p:commandButton value="Reset" action="#{rootBean.resetFilter}" update="filterForm listPanel"/>
+                <div class="button-group">
+                    <p:commandButton value="Search" action="#{rootBean.applyFilter}" update=":filterForm :listPanel" process="@form"/>
+                    <p:commandButton value="Reset" action="#{rootBean.resetFilter}" update="filterForm listPanel"/>
+                </div>
+            </section>
         </h:form>
-    </p:panel>
+    </section>
 
     <p:panel header="Orders">
         <hr/>
