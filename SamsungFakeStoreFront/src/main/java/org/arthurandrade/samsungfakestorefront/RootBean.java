@@ -2,9 +2,11 @@ package org.arthurandrade.samsungfakestorefront;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.arthurandrade.samsungfakestorefront.services.UserService;
 import org.arthurandrade.samsungfakestorefront.utils.Utils;
 
 import java.io.Serial;
@@ -21,6 +23,9 @@ public class RootBean implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Inject
+    private UserService userService;
+
     // Filter fields
     private String name;
     private Date dateFrom;
@@ -30,13 +35,13 @@ public class RootBean implements Serializable {
     // List of items
     private List<Cart> items = new ArrayList<>();
 
-//    @PostConstruct
-//    public void init() {
-//        applyFilter();
-//        System.out.println(items);
-//    }
+    @PostConstruct
+    public void init() {
+        System.out.println(userService.list(null));
+    }
 
     public void applyFilter() {
+        System.out.println(userService.list(null));
         items.clear();
 
         List<Product> products1 = new ArrayList<>();

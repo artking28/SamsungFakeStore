@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.arthurandrade.samsungfakestoreapi.domain.interfaces.IAbstractDTO;
+import org.arthurandrade.samsungfakestoreapi.domain.noData.GenericResponse;
 import org.arthurandrade.samsungfakestoreapi.util.FilteredPageRequest;
 
 import java.util.List;
@@ -25,16 +26,21 @@ public abstract class EntityService<T extends IAbstractDTO<?>> extends AbstractS
 
     public T getById(String id) {
         String path = String.format("%s%s/byId/%s", BASE_URL, getServiceUrl(), id);
-        return client.target(path)
+        GenericResponse response = client.target(path)
                 .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<T>() {});
+                .get(GenericResponse.class);
+
+        return response.getResult() != null ? (T) response.getResult() : null;
     }
 
     public List<T> list(FilteredPageRequest<T> fltr) {
         String path = String.format("%s%s/select", BASE_URL, getServiceUrl());
-        return client.target(path)
+        System.out.println(path);
+        GenericResponse response = client.target(path)
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.json(fltr), new GenericType<List<T>>() {});
+                .post(Entity.json(fltr), GenericResponse.class);
+
+        return response.getResult() != null ? (List<T>) response.getResult() : null;
     }
 
     public T getFirst(FilteredPageRequest<T> fltr) {
@@ -48,17 +54,13 @@ public abstract class EntityService<T extends IAbstractDTO<?>> extends AbstractS
     public T save(T obj) {
         prepareSave(obj);
         String path = String.format("%s%s/save", BASE_URL, getServiceUrl());
-        return client.target(path)
+        GenericResponse response = client.target(path)
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.json(obj), new GenericType<T>() {});
+                .post(Entity.json(obj), GenericResponse.class);
+
+        return response.getResult() != null ? (T) response.getResult() : null;
     }
 
-    public T patch(Object id, Map<String, Object> params) {
-        String path = String.format("%s%s/byId/%s", BASE_URL, getServiceUrl(), id);
-        return client.target(path)
-                .request(MediaType.APPLICATION_JSON)
-                .method("PATCH", Entity.json(params), new GenericType<T>() {});
-    }
 
     public boolean deleteById(Object id) {
         String path = String.format("%s%s/byId/%s", BASE_URL, getServiceUrl(), id);

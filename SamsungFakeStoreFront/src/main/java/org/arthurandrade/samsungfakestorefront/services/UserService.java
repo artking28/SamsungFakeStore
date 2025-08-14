@@ -13,6 +13,6 @@ public class UserService extends EntityService<UserDTO> {
 
     @Override
     protected String getServiceUrl() {
-        return "users";
+        return "/user";
     }
 }
