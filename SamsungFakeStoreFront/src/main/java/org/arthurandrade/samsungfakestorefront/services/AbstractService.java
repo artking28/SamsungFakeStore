@@ -1,0 +1,23 @@
+package org.arthurandrade.samsungfakestorefront.services;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+
+@ApplicationScoped
+public abstract class AbstractService {
+
+    protected Client client = ClientBuilder.newClient();
+
+    // Base URL do serviço
+    protected abstract String getServiceUrl();
+
+    public boolean ping() {
+        Response response = client.target(getServiceUrl() + "/ping")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        return response.getStatus() == 200;
+    }
+}

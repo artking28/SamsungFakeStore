@@ -12,53 +12,53 @@
     <p:panel header="Seach criteria">
         <h:form id="filterForm">
             <p:panelGrid columns="2" columnClasses="label,value">
-                <h:outputLabel for="name" value="Name:" />
-                <p:inputText id="name" value="#{rootBean.name}" />
+                <h:outputLabel for="name" value="Name:"/>
+                <p:inputText id="name" value="#{rootBean.name}"/>
 
-                <h:outputLabel for="dateFrom" value="Date From:" />
-                <p:calendar id="dateFrom" value="#{rootBean.dateFrom}" pattern="yyyy-MM-dd" />
+                <h:outputLabel for="dateFrom" value="Date From:"/>
+                <p:calendar id="dateFrom" value="#{rootBean.dateFrom}" pattern="yyyy-MM-dd"/>
 
-                <h:outputLabel for="dateTo" value="Date To:" />
-                <p:calendar id="dateTo" value="#{rootBean.dateTo}" pattern="yyyy-MM-dd" />
+                <h:outputLabel for="dateTo" value="Date To:"/>
+                <p:calendar id="dateTo" value="#{rootBean.dateTo}" pattern="yyyy-MM-dd"/>
 
-                <h:outputLabel for="orderNumber" value="Order Number:" />
-                <p:inputText id="orderNumber" value="#{rootBean.orderNumber}" />
+                <h:outputLabel for="orderNumber" value="Order Number:"/>
+                <p:inputText id="orderNumber" value="#{rootBean.orderNumber}"/>
             </p:panelGrid>
 
-            <p:commandButton value="Search" action="#{rootBean.applyFilter}" update=":filterForm :listPanel" process="@form" />
-            <p:commandButton value="Reset" action="#{rootBean.resetFilter}" update="filterForm listPanel" />
+            <p:commandButton value="Search" action="#{rootBean.applyFilter}" update=":filterForm :listPanel"
+                             process="@form"/>
+            <p:commandButton value="Reset" action="#{rootBean.resetFilter}" update="filterForm listPanel"/>
         </h:form>
     </p:panel>
 
-    <section id="body">
-        <h1>Orders</h1>
+    <p:panel header="Orders">
         <hr/>
 
         <h3>#{rootBean.name}</h3>
-<!--        <h3>Arthur ANdrade</h3>-->
 
-        <section id="orders">
-            <p:dataView id="listPanel" var="order" value="#{rootBean.items}">
+        <!--        <section id="orders">-->
+        <p:dataView id="listPanel" var="order" value="#{rootBean.items}">
+            <p:dataViewListItem>
                 <div class="order">
-<!--                    <h3>#{order.orderNumber} (#{order.createdAt})</h3>-->
-                    <h3>##{order.orderNumber} (#{order.createdAt})</h3>
+                    <h3>##{order.orderNumber} (#{rootBean.data(order.createdAt)})</h3>
 
                     <div id="details">
                         <h5>Products</h5>
                         <hr/>
                         <p:dataTable value="#{order.products}" var="product" style="width:100%">
                             <p:column headerText="Product Name">
-                                <h:outputText value="#{product.name}" />
+                                <h:outputText value="#{product.name}"/>
                             </p:column>
                             <p:column headerText="Quantity">
-                                <h:outputText value="#{product.quantity}" />
+                                <h:outputText value="#{product.quantity}"/>
                             </p:column>
                         </p:dataTable>
                     </div>
                 </div>
-            </p:dataView>
-        </section>
-    </section>
+            </p:dataViewListItem>
+        </p:dataView>
+        <!--        </section>-->
+    </p:panel>
 
 </h:body>
 </html>

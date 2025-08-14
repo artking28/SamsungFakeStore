@@ -1,19 +1,25 @@
 package org.arthurandrade.samsungfakestorefront;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.persistence.criteria.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.arthurandrade.samsungfakestorefront.utils.Utils;
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Named("rootBean")
-@RequestScoped
-public class RootBean {
+@ViewScoped
+public class RootBean implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     // Filter fields
     private String name;
@@ -24,11 +30,11 @@ public class RootBean {
     // List of items
     private List<Cart> items = new ArrayList<>();
 
-    @PostConstruct
-    public void init() {
-        applyFilter();
-        System.out.println(items);
-    }
+//    @PostConstruct
+//    public void init() {
+//        applyFilter();
+//        System.out.println(items);
+//    }
 
     public void applyFilter() {
         items.clear();
@@ -53,6 +59,10 @@ public class RootBean {
         items.clear();
     }
 
+    public String data(Date date) {
+        return Utils.formatData(date);
+    }
+
     // Classe interna para a tabela
     @Data
     public static class Cart {
@@ -71,7 +81,7 @@ public class RootBean {
 
     @Data
     @AllArgsConstructor
-    public class Product {
+    public static class Product {
         private String name;
         private int quantity;
     }
