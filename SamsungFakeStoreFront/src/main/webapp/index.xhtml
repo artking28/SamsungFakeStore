@@ -3,14 +3,62 @@
       xmlns:p="primefaces">
 
 <h:head>
-    <title>DevMedia - Menu</title>
+    <title>Samsung FakeStore UI</title>
+    <link rel="stylesheet" href="style.css"/>
 </h:head>
 
 <h:body>
-    <h1>Teste</h1>
-    <p:panelGrid columns="2">
-        <h:outputText value="#{rootBean.firstName}"/>
-        <h:outputText value="#{rootBean.lastName}" />
-    </p:panelGrid>
+
+    <p:panel header="Seach criteria">
+        <h:form id="filterForm">
+            <p:panelGrid columns="2" columnClasses="label,value">
+                <h:outputLabel for="name" value="Name:" />
+                <p:inputText id="name" value="#{rootBean.name}" />
+
+                <h:outputLabel for="dateFrom" value="Date From:" />
+                <p:calendar id="dateFrom" value="#{rootBean.dateFrom}" pattern="yyyy-MM-dd" />
+
+                <h:outputLabel for="dateTo" value="Date To:" />
+                <p:calendar id="dateTo" value="#{rootBean.dateTo}" pattern="yyyy-MM-dd" />
+
+                <h:outputLabel for="orderNumber" value="Order Number:" />
+                <p:inputText id="orderNumber" value="#{rootBean.orderNumber}" />
+            </p:panelGrid>
+
+            <p:commandButton value="Search" action="#{rootBean.applyFilter}" update=":filterForm :listPanel" process="@form" />
+            <p:commandButton value="Reset" action="#{rootBean.resetFilter}" update="filterForm listPanel" />
+        </h:form>
+    </p:panel>
+
+    <section id="body">
+        <h1>Orders</h1>
+        <hr/>
+
+        <h3>#{rootBean.name}</h3>
+<!--        <h3>Arthur ANdrade</h3>-->
+
+        <section id="orders">
+            <p:dataView id="listPanel" var="order" value="#{rootBean.items}">
+                <div class="order">
+<!--                    <h3>#{order.orderNumber} (#{order.createdAt})</h3>-->
+                    <h3>##{order.orderNumber} (#{order.createdAt})</h3>
+
+                    <div id="details">
+                        <h5>Products</h5>
+                        <hr/>
+                        <p:dataTable value="#{order.products}" var="product" style="width:100%">
+                            <p:column headerText="Product Name">
+                                <h:outputText value="#{product.name}" />
+                            </p:column>
+                            <p:column headerText="Quantity">
+                                <h:outputText value="#{product.quantity}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </p:dataView>
+        </section>
+    </section>
+
 </h:body>
 </html>
