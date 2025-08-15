@@ -1,6 +1,6 @@
 ### Agradecimentos
 
-Agradeço imensamente pela oportunidade de participar do teste. Infelizmente, não consegui completá-lo no prazo de três dias, pois realizá-lo junto da faculdade e trabalho impossibilita a realização dele durante os dias úteis. Peço desculpas por qualquer inconveniente e espero poder demonstrar meu potencial em futuras oportunidades, apesar do projeto falho.
+Agradeço imensamente a Samsung pela oportunidade de participar do teste. Infelizmente, não consegui completá-lo no prazo de três dias, pois realizá-lo junto da faculdade e trabalho torna impossível a realização dele durante os dias úteis. Peço desculpas por qualquer inconveniente e espero poder demonstrar meu potencial em futuras oportunidades(apesar do projeto falho).
 
 # SamsungFakeStore
 
