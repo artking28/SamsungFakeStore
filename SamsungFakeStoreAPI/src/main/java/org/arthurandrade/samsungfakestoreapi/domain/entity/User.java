@@ -24,7 +24,7 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private Date createdAt = new Date();
 
     @Column(name = "email", unique = true, nullable = false)
