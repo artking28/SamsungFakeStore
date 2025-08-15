@@ -3,49 +3,37 @@ package org.arthurandrade.samsungfakestoreapi.domain.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Objects;
+import org.arthurandrade.samsungfakestoreapi.domain.dto.CartProductDTO;
+import org.arthurandrade.samsungfakestoreapi.domain.interfaces.IAbstractEntity;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "cartProducts")
-public class CartProduct {
+public class CartProduct extends AbstractObject implements IAbstractEntity<CartProduct, CartProductDTO> {
 
-    @EmbeddedId
-    private CartProductId id = new CartProductId();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("cartId")
+    @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("productId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(nullable = false)
     private Integer quantity = 1;
 
-
-    @Embeddable
-    @Getter
-    @Setter
-    public static class CartProductId {
-
-        private Long cartId;
-        private Long productId;
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof CartProductId)) return false;
-            CartProductId that = (CartProductId) o;
-            return Objects.equals(cartId, that.cartId) && Objects.equals(productId, that.productId);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(cartId, productId);
-        }
+    @Override
+    public CartProductDTO toDTO() {
+        CartProductDTO ret = new CartProductDTO();
+        ret.setId(this.id);
+        ret.setUuidCheck(getUuidCheck());
+        ret.setProduct(this.product.toDTO());
+        ret.setQuantity(this.quantity);
+        return ret;
     }
 }

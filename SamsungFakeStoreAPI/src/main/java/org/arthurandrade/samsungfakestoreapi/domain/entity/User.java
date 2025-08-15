@@ -14,7 +14,7 @@ import java.util.*;
 @Setter
 @Entity
 @Table(name = "users")
-public class User extends AbstractObject implements IAbstractEntity<User, UserDTO> {
+public class User extends AbstractObject implements IAbstractEntity<User, UserDTO>, Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +24,8 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "created_at", nullable = false)
-    private Date createdAt = new Date();
+    @Column(name = "date", nullable = false)
+    private Date date = new Date();
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -43,10 +43,10 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     public UserDTO toDTO() {
         UserDTO ret = new UserDTO();
         ret.setId(this.id);
-        ret.setName(this.getName());
-        ret.setEmail(this.getEmail());
-        ret.setCreatedAt(this.getCreatedAt());
-        ret.setEmail(this.getEmail());
+        ret.setName(this.name);
+        ret.setEmail(this.email);
+        ret.setDate(this.date);
+        ret.setEmail(this.email);
         ret.setUuidCheck(getUuidCheck());
         if(this.carts != null) {
             ret.setCarts(this.carts.stream().map(Cart::toDTO).toList());
@@ -63,6 +63,11 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
         if (!thisClass.equals(otherClass)) return false;
         User other = (User) o;
         return id != null && id.equals(other.id);
+    }
+
+    @Override
+    public User clone() throws CloneNotSupportedException {
+        return (User) super.clone();
     }
 
     @Override

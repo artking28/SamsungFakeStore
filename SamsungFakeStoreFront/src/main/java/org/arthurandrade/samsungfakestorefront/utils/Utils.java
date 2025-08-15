@@ -14,6 +14,9 @@ public class Utils {
     }
 
     public static String formatData(Date date) {
+        if (date == null) {
+            return "null";
+        }
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
         return sdf.format(date);
     }

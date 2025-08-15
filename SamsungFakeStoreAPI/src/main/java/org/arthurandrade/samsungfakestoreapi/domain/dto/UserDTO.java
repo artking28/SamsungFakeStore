@@ -18,7 +18,7 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
 
     private String name;
 
-    private Date createdAt = new Date();
+    private Date date = new Date();
 
     private String email;
 
@@ -28,9 +28,9 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
     public User toEntity() {
         User ret = new User();
         ret.setId(this.id);
-        ret.setName(this.getName());
-        ret.setEmail(this.getEmail());
-        ret.setCreatedAt(this.getCreatedAt());
+        ret.setName(this.name);
+        ret.setEmail(this.email);
+        ret.setDate(this.date);
         ret.setUuidCheck(getUuidCheck());
         if(this.carts != null) {
             ret.setCarts(this.carts.stream().map(CartDTO::toEntity).toList());

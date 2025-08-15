@@ -4,13 +4,16 @@ import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.arthurandrade.samsungfakestorefront.services.UserService;
+import org.arthurandrade.samsungfakestoreapi.domain.dto.CartDTO;
+import org.arthurandrade.samsungfakestorefront.services.CartService;
 import org.arthurandrade.samsungfakestorefront.utils.Utils;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +27,7 @@ public class RootBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Inject
-    private UserService userService;
+    private CartService cartService;
 
     // Filter fields
     private String name;
@@ -36,26 +39,27 @@ public class RootBean implements Serializable {
     private String orderNumber;
 
     // List of items
-    private List<Cart> items = new ArrayList<>();
+    private List<CartDTO> items = new ArrayList<>();
 
     @PostConstruct
     public void init() {
-        System.out.println(userService.list(null));
+        this.applyFilter();
     }
 
     public void applyFilter() {
-        System.out.println(userService.list(null));
-        items.clear();
-
-        List<Product> products1 = new ArrayList<>();
-        products1.add(new Product("TV", 1));
-        products1.add(new Product("Phone", 2));
-
-        List<Product> products2 = new ArrayList<>();
-        products2.add(new Product("Tablet", 1));
-
-        items.add(new Cart("John", new Date(), "123", products1));
-        items.add(new Cart("Jane", new Date(), "456", products2));
+        this.items = cartService.list(null);
+        System.out.println(this.items);
+//        items.clear();
+//
+//        List<Product> products1 = new ArrayList<>();
+//        products1.add(new Product("TV", 1));
+//        products1.add(new Product("Phone", 2));
+//
+//        List<Product> products2 = new ArrayList<>();
+//        products2.add(new Product("Tablet", 1));
+//
+//        items.add(new Cart("John", new Date(), "123", products1));
+//        items.add(new Cart("Jane", new Date(), "456", products2));
     }
 
     // Reset action
@@ -67,30 +71,20 @@ public class RootBean implements Serializable {
         items.clear();
     }
 
-    public String data(Date date) {
-        return Utils.formatData(date);
-    }
-
-    // Classe interna para a tabela
-    @Data
-    public static class Cart {
-        private String ownerName;
-        private Date createdAt;
-        private String orderNumber;
-        private List<Product> products;
-
-        public Cart(String ownerName, Date createdAt, String orderNumber, List<Product> products) {
-            this.ownerName = ownerName;
-            this.createdAt = createdAt;
-            this.orderNumber = orderNumber;
-            this.products = products;
+    public String data(Object obj) {
+        if (obj instanceof Date d) {
+            return Utils.formatData(d);
         }
-    }
 
-    @Data
-    @AllArgsConstructor
-    public static class Product {
-        private String name;
-        private int quantity;
+        if (obj instanceof String str) {
+            try {
+                var ret = new SimpleDateFormat("yyyy-MM-dd").parse(str);
+                return Utils.formatData(ret);
+            } catch (ParseException e) {
+                return str;
+            }
+        }
+
+        return "null";
     }
 }

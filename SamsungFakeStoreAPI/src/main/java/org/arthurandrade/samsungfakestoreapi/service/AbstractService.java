@@ -32,13 +32,15 @@ public abstract class AbstractService<T extends IAbstractEntity<T, DTO>, DTO ext
 
 	public List<DTO> find(FilteredPageRequest<DTO> request) throws ObjectNotFoundException {
 		if(request == null) {
-			return this.getRepository().findAll().stream().map(IAbstractEntity::toDTO).toList();
+			var ret = this.getRepository().findAll();
+            return ret.stream().map(IAbstractEntity::toDTO).toList();
 		}
 
 		var pageable = request.toSpringPageRequest();
 		DTO filter = request.getContent();
 		if(filter == null) {
-			return this.getRepository().findAll(pageable).stream().map(IAbstractEntity::toDTO).toList();
+            var ret = this.getRepository().findAll(pageable);
+			return ret.stream().map(IAbstractEntity::toDTO).toList();
 		}
 
 		Example<T> example = Example.of(filter.toEntity());

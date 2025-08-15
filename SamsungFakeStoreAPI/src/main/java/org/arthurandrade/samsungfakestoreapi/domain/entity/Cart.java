@@ -25,6 +25,9 @@ public class Cart extends AbstractObject implements IAbstractEntity<Cart, CartDT
 	@JoinColumn(name = "user_id", updatable = false)
 	private User user;
 
+    @Column(name = "date", nullable = false, updatable = false)
+    private Date date;
+
     @OneToMany(mappedBy = "cart",
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
@@ -42,6 +45,10 @@ public class Cart extends AbstractObject implements IAbstractEntity<Cart, CartDT
 	public CartDTO toDTO() {
 		CartDTO ret = new CartDTO();
 		ret.setId(id);
+        ret.setDate(this.date);
+        user.setCarts(null);
+        ret.setUser(user.toDTO());
+        ret.setCartProducts(cartProducts.stream().map(CartProduct::toDTO).toList());
 		return ret;
 	}
 

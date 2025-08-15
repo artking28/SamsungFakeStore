@@ -48,17 +48,17 @@
         <p:dataView id="listPanel" var="order" value="#{rootBean.items}">
             <p:dataViewListItem>
                 <div class="order">
-                    <h3>##{order.orderNumber} (#{rootBean.data(order.createdAt)})</h3>
+                    <h3>##{order.id} (#{rootBean.data(order.date)})</h3>
 
                     <div id="details">
                         <h5>Products</h5>
                         <hr/>
-                        <p:dataTable value="#{order.products}" var="product" style="width:100%">
+                        <p:dataTable value="#{order.cartProducts}" var="cartProduct" style="width:100%">
                             <p:column headerText="Product Name">
-                                <h:outputText value="#{product.name}"/>
+                                <h:outputText value="#{cartProduct.product.title}"/>
                             </p:column>
                             <p:column headerText="Quantity">
-                                <h:outputText value="#{product.quantity}"/>
+                                <h:outputText value="#{cartProduct.quantity}"/>
                             </p:column>
                         </p:dataTable>
                     </div>
