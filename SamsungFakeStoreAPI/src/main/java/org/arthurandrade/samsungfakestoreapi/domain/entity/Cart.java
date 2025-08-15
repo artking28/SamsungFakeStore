@@ -25,6 +25,13 @@ public class Cart extends AbstractObject implements IAbstractEntity<Cart, CartDT
 	@JoinColumn(name = "user_id", updatable = false)
 	private User user;
 
+    @OneToMany(mappedBy = "cart",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<CartProduct> cartProducts = new ArrayList<>();
+
 	public Cart() {
 	}
 

@@ -36,6 +36,12 @@ public class Product extends AbstractObject implements IAbstractEntity<Product, 
     @Column(name = "image", nullable = false)
     private String image;
 
+    @OneToMany(mappedBy = "product",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<CartProduct> cartProducts = new ArrayList<>();
 
     public Product() {
     }
