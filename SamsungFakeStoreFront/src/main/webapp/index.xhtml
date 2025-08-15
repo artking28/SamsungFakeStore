@@ -32,41 +32,51 @@
                 </div>
 
                 <div class="button-group">
-                    <p:commandButton value="Search" action="#{rootBean.applyFilter}" update=":filterForm :listPanel" process="@form"/>
+                    <p:commandButton value="Search" action="#{rootBean.applyFilter}" update=":filterForm :listPanel"
+                                     process="@form"/>
                     <p:commandButton value="Reset" action="#{rootBean.resetFilter}" update="filterForm listPanel"/>
                 </div>
             </section>
         </h:form>
     </section>
 
-    <p:panel header="Orders">
+    <section id="body">
+        <h1>Orders</h1>
         <hr/>
 
         <h3>#{rootBean.name}</h3>
 
-        <!--        <section id="orders">-->
         <p:dataView id="listPanel" var="order" value="#{rootBean.items}">
             <p:dataViewListItem>
                 <div class="order">
-                    <h3>##{order.id} (#{rootBean.data(order.date)})</h3>
+                    <div>
+<!--                        <h:outputText value="##{order.id}"/>-->
+                        <h:outputText value="#{rootBean.getOrderDate(order)}"/>
+                        <h:outputText value="(#{rootBean.getOrderSum(order)})"/>
+                    </div>
 
-                    <div id="details">
+                    <div class="details">
                         <h5>Products</h5>
+                        <h5>Price</h5>
+                        <h5>Qty</h5>
+                        <h5>Subtotal</h5>
                         <hr/>
-                        <p:dataTable value="#{order.cartProducts}" var="cartProduct" style="width:100%">
-                            <p:column headerText="Product Name">
-                                <h:outputText value="#{cartProduct.product.title}"/>
-                            </p:column>
-                            <p:column headerText="Quantity">
-                                <h:outputText value="#{cartProduct.quantity}"/>
-                            </p:column>
-                        </p:dataTable>
+                        <div class="products">
+                            <p:dataView value="#{order.cartProducts}" var="cartProduct" style="width:100%">
+                                <p:dataViewListItem>
+                                    <div>
+                                        <h:outputText value="#{cartProduct.product.image}"/>
+                                        <h:outputText value="#{cartProduct.product.title}"/>
+                                        <h:outputText value="#{cartProduct.quantity}"/>
+                                    </div>
+                                </p:dataViewListItem>
+                            </p:dataView>
+                        </div>
                     </div>
                 </div>
             </p:dataViewListItem>
         </p:dataView>
-        <!--        </section>-->
-    </p:panel>
+    </section>>
 
 </h:body>
 </html>

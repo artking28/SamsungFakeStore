@@ -1,7 +1,8 @@
 package org.arthurandrade.samsungfakestorefront;
 
+import jakarta.annotation.ManagedBean;
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Data;
@@ -11,15 +12,14 @@ import org.arthurandrade.samsungfakestorefront.utils.Utils;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Data
 @Named("rootBean")
-@ViewScoped
+@SessionScoped
 public class RootBean implements Serializable {
 
     @Serial
@@ -45,7 +45,6 @@ public class RootBean implements Serializable {
 
     public void applyFilter() {
         this.items = cartService.list(null);
-//        System.out.println(this.items);
     }
 
     // Reset action
@@ -57,20 +56,14 @@ public class RootBean implements Serializable {
         items.clear();
     }
 
-    public String data(Object obj) {
-        if (obj instanceof Date d) {
-            return Utils.formatData(d);
-        }
 
-        if (obj instanceof String str) {
-            try {
-                var ret = new SimpleDateFormat("yyyy-MM-dd").parse(str);
-                return Utils.formatData(ret);
-            } catch (ParseException e) {
-                return str;
-            }
-        }
+    public String getOrderDate(CartDTO order) {
+        return Utils.formatData(order.getDate());
+    }
 
-        return "null";
+    public String getOrderSum(CartDTO order) {
+        return order.getCartProducts().stream().map((cp) -> {
+            return cp.getQuantity() * cp.getProduct().getPrice();
+        }).reduce(0f, Float::sum).toString();
     }
 }
