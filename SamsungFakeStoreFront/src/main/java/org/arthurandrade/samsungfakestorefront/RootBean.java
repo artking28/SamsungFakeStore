@@ -11,7 +11,6 @@ import org.arthurandrade.samsungfakestorefront.utils.Utils;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ public class RootBean implements Serializable {
     @Inject
     private CartService cartService;
 
-    // Filter fields
     private String name;
 
     private Date dateFrom;
@@ -38,7 +36,6 @@ public class RootBean implements Serializable {
 
     private String orderNumber;
 
-    // List of items
     private List<CartDTO> items = new ArrayList<>();
 
     @PostConstruct
@@ -48,18 +45,7 @@ public class RootBean implements Serializable {
 
     public void applyFilter() {
         this.items = cartService.list(null);
-        System.out.println(this.items);
-//        items.clear();
-//
-//        List<Product> products1 = new ArrayList<>();
-//        products1.add(new Product("TV", 1));
-//        products1.add(new Product("Phone", 2));
-//
-//        List<Product> products2 = new ArrayList<>();
-//        products2.add(new Product("Tablet", 1));
-//
-//        items.add(new Cart("John", new Date(), "123", products1));
-//        items.add(new Cart("Jane", new Date(), "456", products2));
+//        System.out.println(this.items);
     }
 
     // Reset action
