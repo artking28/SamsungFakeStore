@@ -1,5 +1,6 @@
 package org.arthurandrade.samsungfakestorefront;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.ManagedBean;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -12,6 +13,8 @@ import org.arthurandrade.samsungfakestorefront.utils.Utils;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,14 +59,20 @@ public class RootBean implements Serializable {
         items.clear();
     }
 
+    public String data(Object obj) {
+        if (obj instanceof Date d) {
+            return Utils.formatData(d);
+        }
 
-    public String getOrderDate(CartDTO order) {
-        return Utils.formatData(order.getDate());
-    }
+        if (obj instanceof String str) {
+            try {
+                var ret = new SimpleDateFormat("yyyy-MM-dd").parse(str);
+                return Utils.formatData(ret);
+            } catch (ParseException e) {
+                return str;
+            }
+        }
 
-    public String getOrderSum(CartDTO order) {
-        return order.getCartProducts().stream().map((cp) -> {
-            return cp.getQuantity() * cp.getProduct().getPrice();
-        }).reduce(0f, Float::sum).toString();
+        return "null";
     }
 }

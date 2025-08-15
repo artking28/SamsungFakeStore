@@ -49,29 +49,19 @@
         <p:dataView id="listPanel" var="order" value="#{rootBean.items}">
             <p:dataViewListItem>
                 <div class="order">
-                    <div>
-<!--                        <h:outputText value="##{order.id}"/>-->
-                        <h:outputText value="#{rootBean.getOrderDate(order)}"/>
-                        <h:outputText value="(#{rootBean.getOrderSum(order)})"/>
-                    </div>
+                    <h3>##{order.id} (#{rootBean.data(order.date)})</h3>
 
-                    <div class="details">
+                    <div id="details">
                         <h5>Products</h5>
-                        <h5>Price</h5>
-                        <h5>Qty</h5>
-                        <h5>Subtotal</h5>
                         <hr/>
-                        <div class="products">
-                            <p:dataView value="#{order.cartProducts}" var="cartProduct" style="width:100%">
-                                <p:dataViewListItem>
-                                    <div>
-                                        <h:outputText value="#{cartProduct.product.image}"/>
-                                        <h:outputText value="#{cartProduct.product.title}"/>
-                                        <h:outputText value="#{cartProduct.quantity}"/>
-                                    </div>
-                                </p:dataViewListItem>
-                            </p:dataView>
-                        </div>
+                        <p:dataTable value="#{order.cartProducts}" var="cartProduct" style="width:100%">
+                            <p:column headerText="Product Name">
+                                <h:outputText value="#{cartProduct.product.title}"/>
+                            </p:column>
+                            <p:column headerText="Quantity">
+                                <h:outputText value="#{cartProduct.quantity}"/>
+                            </p:column>
+                        </p:dataTable>
                     </div>
                 </div>
             </p:dataViewListItem>
